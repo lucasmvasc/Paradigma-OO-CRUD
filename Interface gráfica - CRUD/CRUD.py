@@ -548,7 +548,7 @@ window = Tk()
 window.title("CRUD")
 window.geometry("900x520")  # Width x Height
 trashcanImage = PhotoImage(
-    file="C:\\Users\\lucas\\Desktop\\New folder (3)\\delete.png")
+    file="C:\\Users\\lucas\\Desktop\\Interface gráfica - CRUD\\delete.png")
 topBar = Canvas(
     window,
     bg="#435d7d",
