@@ -30,38 +30,11 @@ Image('drive/My Drive/ParadigmaOO.png')
 import datetime
 from abc import ABC, abstractmethod
 
-"""## Testes (Temporário)"""
-
-#fn = Professor("João", 25, "joão@gmail.com")
-#fn.getNumRegistro
-
-#fn = Professor("Joãos", 25, "joão@gmail.com")
-#type(fn.getNumRegistro())
-
-prof = Professor("João", 25, "joao@gmail.com", 25 , "Ciências Biologicas")
-prof.ativarIncentivo(10)
-prof.adicionarTurma(["T587-99","H197-16","T198-22"])
-
-secr = Secretario("José", 55, "jose@gmail.com", 40, "Coordenação das Engenharias")
-secr.transferirSetorPara("DAE")
-secr.ativarIncentivo(2)
-
-coord = Coordenador("Lucas", 30, "Lucas@yahoo.com.br", 40, "Assuntos internacionais")
-coord.adicionarAdvertencia(prof,2)
-
-prof.toString()
-secr.toString()
-coord.toString()
-
-secr.switchAtendimento()
-coord.contactarSecretario(secr,"Motivo X")
-secr.toString()
-
 """## Classe funcionário"""
 
 class Funcionario(ABC):
   '''Funcionário de terminada instituição de ensino'''
-  def __init__(self, nome, idade, email, cargaHoraria, salario=0):
+  def __init__(self, nome, idade, email, cargaHoraria):
     if not nome.isalpha(): # Verifica se o nome não usa somente letras
       raise ValueError(f"O nome '{nome}' é inválido !") # função do f é similar ao .format, porém menos verbosa !
     
@@ -129,7 +102,7 @@ class Funcionario(ABC):
   def setCargaHoraria(self,cargaHoraria):
     self._cargaHoraria = cargaHoraria
 
-
+  @abstractmethod
   def toString(self):
     print("Nome: " + self.getNome() +
           "\nIdade: " + str(self.getIdade()) +
@@ -151,7 +124,7 @@ class Professor(Funcionario):
     self._advertencias = 0
 
   def ativarIncentivo(self, valor):
-    if not str(valor).isdigit(): # Verifica se a idade possui somente digitos
+    if not str(valor).isdigit(): # Verifica se o valor possui somente digitos
       raise ValueError(f"O valor {valor} para gerar incentivo é inválido ! Por favor digite soemnte números inteiros positivos")
     self.setSalario((self.getSalario()* (valor/100)) + self.getSalario()) 
 
@@ -266,7 +239,34 @@ class Coordenador(Funcionario):
     print("Setor: " + self.getSetor() +
           "\n" )
 
-"""## Tkinter (Versão Mac)"""
+"""## Testes (Temporário)"""
+
+#fn = Professor("João", 25, "joão@gmail.com")
+#fn.getNumRegistro
+
+#fn = Professor("Joãos", 25, "joão@gmail.com")
+#type(fn.getNumRegistro())
+
+prof = Professor("João", 25, "joao@gmail.com", 25 , "Ciências Biologicas")
+prof.ativarIncentivo(10)
+prof.adicionarTurma(["T587-99","H197-16","T198-22"])
+
+secr = Secretario("José", 55, "jose@gmail.com", 40, "Coordenação das Engenharias")
+secr.transferirSetorPara("DAE")
+secr.ativarIncentivo(2)
+
+coord = Coordenador("Lucas", 30, "Lucas@yahoo.com.br", 40, "Assuntos internacionais")
+coord.adicionarAdvertencia(prof,2)
+
+prof.toString()
+secr.toString()
+coord.toString()
+
+secr.switchAtendimento()
+coord.contactarSecretario(secr,"Motivo X")
+secr.toString()
+
+"""## Tkinter (Versão Mac) - **incompleto**"""
 
 from tkinter import *
 from tkinter import ttk, StringVar, IntVar
@@ -638,7 +638,7 @@ class Professor(Funcionario):
     newLinex = LinhaDeDados(nome, idade, email, cargaHoraria, curso, self.getTurmas(), self.getAdvertencias(), self.getNumRegistro(), self.getSalario(), cargo ="Professor")
 
   def ativarIncentivo(self, valor):
-    if not str(valor).isdigit(): # Verifica se a idade possui somente digitos
+    if not str(valor).isdigit(): # Verifica se o valor possui somente digitos
       raise ValueError(f"O valor {valor} para gerar incentivo é inválido ! Por favor digite soemnte números inteiros positivos")
     self.setSalario((self.getSalario()* (valor/100)) + self.getSalario()) 
 
