@@ -28,7 +28,7 @@ class Funcionario(ABC):
                           f'{contador:03d}')
     self._salario = 0
 
-  global contadorReg
+  global  contadorReg
   contadorReg = 0
   def _addContador():
     global contadorReg
@@ -83,7 +83,7 @@ class Professor(Funcionario):
     self._curso = curso
     self._turmas = []
     self._advertencias = 0
-    newLinex = LinhaDeDados(nome, idade, email, cargaHoraria, curso, self.getTurmas(), self.getAdvertencias(), self.getNumRegistro(), self.getSalario(), cargo ="Professor")
+    LinhaDeDados(nome, idade, email, cargaHoraria, curso, self.getTurmas(), self.getAdvertencias(), self.getNumRegistro(), self.getSalario(), cargo ="Professor")
 
   def ativarIncentivo(self, valor):
     if not str(valor).isdigit(): # Verifica se a idade possui somente digitos
@@ -197,6 +197,268 @@ class Coordenador(Funcionario):
           "\nSalário: R$" + str(self.getSalario()) + "\n" )
 
 
+class Aplication():
+# Canvas principal
+  def addButtonClicked(self,event):
+      if(contador < 10):
+          topBar.itemconfig(addBtn, fill="#5cb85c")
+          modal = Tk()
+          modal.title("Adicionar funcionário")
+          modal.geometry("420x520+%d+%d" % (window.winfo_x(), window.winfo_y()))
+          modal.resizable(0, 0)
+
+          def validacaoCampos(*args):
+              val1,val2,val3,val4,val5 = False, False, False, False, False
+
+              try:
+                  val1 = str(SVName.get())
+                  if any(char.isdigit() for char in val1):
+                      val1 = '' 
+              except:
+                  pass
+                  
+              try: val2 = int(SVIdade.get())
+              except: botao.config(state='disabled',bg="#A9BBD1")
+              
+              try:
+                  val3 = str(SVEmail.get())
+                  if not any( char == "@" for char in val3):
+                      val3 = ''
+              except:
+                  pass
+                  
+              try: val4 = int(SVCargaHoraria.get())
+              except: botao.config(state='disabled', bg="#A9BBD1")
+              
+              try:
+                  val5 = str(SVCursoSetor.get())
+                  if any(char.isdigit() for char in val5):
+                      val5 = '' 
+              except:
+                  pass
+
+              if val1 and val2 and val3 and val4 and val5:
+                  botao.config(state='normal',bg="#435d7d")
+              else:
+                  botao.config(state='disabled',bg="#A9BBD1")
+                  
+              return val1, val2, val3, val4, val5
+
+          topBarAdd = Canvas(
+              modal,
+              bg="#435d7d",
+              height="80",
+              width="420",
+              highlightthickness=0,
+              relief='ridge')
+          topBarAdd.create_text(
+              210, 40,
+              text="Adicionar funcionários",
+              fill="#fafdfb",
+              font="Helvetica 22 bold")
+          topBarAdd.grid(row=0, sticky=W)
+
+          Canvas(modal, height="10").grid(row=1)
+          SVComboBox = tk.StringVar(modal)
+          ttk.Label(
+              modal,
+              font="Helvetica 14",
+              foreground="#435d7d",
+              text="Classe:").grid(row=2, column=0, sticky=W)
+          ComboBox = ttk.Combobox(
+              modal,
+              font="Helvetica 16",
+              state="readonly",
+              values=["Professor", "Secretario", "Coordenador"],
+              width="15",
+              textvariable = SVComboBox)
+          SVComboBox.set("Professor")
+          ComboBox.grid(row=2, column=0, sticky=W, padx=70)
+
+          Canvas(modal, height="10").grid(row=3)
+          SVName = tk.StringVar(modal)
+          SVName.trace("w", validacaoCampos)
+          ttk.Label(
+              modal,
+              foreground="#435d7d",
+              font="Helvetica 14",
+              text="Nome:").grid(row=4, column=0, sticky=W)
+          name = tk.Entry(
+              modal,
+              font="Helvetica 16",
+              textvariable=SVName)
+          name.grid(row=4, column=0, stick=W, padx=60)
+
+          Canvas(modal, height="10").grid(row=5)
+          SVIdade = tk.StringVar(modal)
+          SVIdade.trace("w", validacaoCampos)
+          ttk.Label(
+              modal,
+              foreground="#435d7d",
+              font="Helvetica 14",
+              text="Idade:").grid(row=6, column=0, sticky=W)
+          idade = Entry(
+              modal,
+              font="Helvetica 16",
+              width="4",
+              textvariable=SVIdade)
+          idade.grid(row=6, column=0, stick=W, padx=60)
+
+          Canvas(modal, height="10").grid(row=7)
+          SVEmail = tk.StringVar(modal)
+          SVEmail.trace("w", validacaoCampos)
+          ttk.Label(
+              modal,
+              foreground="#435d7d",
+              font="Helvetica 14",
+              text="Email:").grid(row=8, column=0, sticky=W)
+          email = Entry(
+              modal,
+              font="Helvetica 16",
+              textvariable=SVEmail)
+          email.grid(row=8, column=0, stick=W, padx=60)
+
+          Canvas(modal, height="10").grid(row=9)
+          SVCargaHoraria = tk.StringVar(modal)
+          SVCargaHoraria.trace("w", validacaoCampos)
+          ttk.Label(
+              modal,
+              foreground="#435d7d",
+              font="Helvetica 14",
+              text="Carga horária:").grid(row=10, column=0, sticky=W)
+          cargaHoraria = Entry(
+              modal,
+              font="Helvetica 16",
+              width="4",
+              textvariable=SVCargaHoraria)
+          cargaHoraria.grid(row=10, column=0, stick=W, padx=125)
+
+          Canvas(modal, height="10").grid(row=11)
+          SVCursoSetor = tk.StringVar(modal)
+          SVCursoSetor.trace("w", validacaoCampos)
+          ttk.Label(
+              modal,
+              foreground="#435d7d",
+              font="Helvetica 14",
+              text="Curso/Setor:").grid(row=12, sticky=W)
+          cursoSetor = Entry(
+              modal,
+              font="Helvetica 16",
+              width="15",
+              textvariable=SVCursoSetor)
+          cursoSetor.grid(row=12)
+          Canvas(modal, height="70").grid(row=13)
+
+          def submitBtnClicked():
+              print("Funcionário adicionado")
+              name, idade, email, cargaHoraria, cursoSetor = validacaoCampos()
+              modal.destroy()
+              return (Professor(name, idade, email, cargaHoraria, cursoSetor) if SVComboBox.get() == "Professor"
+                      else Secretario(name, idade, email, cargaHoraria, cursoSetor) if SVComboBox.get() == "Secretario"
+                      else Coordenador(name, idade, email, cargaHoraria, cursoSetor))
+
+              
+          botao = Button(
+              modal,
+              fg="#fafdfb",
+              bg="#A9BBD1",
+              font="Helvetica 12",
+              width="15",
+              text="Finalizado",
+              state="disabled",
+              disabledforeground="#fafdfb",
+              command=submitBtnClicked)
+          botao.grid(row=14)
+
+      else:
+          topBar.itemconfig(addBtn, fill="#C0C0C0")
+
+  def __init__(self):
+    global mainContent, topBar, addBtn, window
+    window = Tk()
+    window.title("CRUD")
+    window.geometry("900x520")  # Width x Height
+    topBar = Canvas(
+        window,
+        bg="#435d7d",
+        height="80",
+        width="900",
+        highlightthickness=0,
+        relief='ridge')
+    topBar.create_text(
+        220, 40,
+        text="Gerenciador de funcionários",
+        fill="#fafdfb",
+        font="Helvetica 22 bold")
+    addBtn = topBar.create_rectangle(
+        720, 20,
+        880, 60,
+        fill="#5cb85c",
+        tags="addButtonSurface")
+    topBar.create_text(
+        800, 40,
+        text="Adicionar funcionário",
+        fill="#fafdfb",
+        font="Helvetica 12",
+        tags="addButtonSurface")
+
+    # Nome / Número de Registro / E-mail / Cargo
+    mainContent = Canvas(
+        window,
+        bg="white",
+        height="500",
+        width="900",
+        highlightthickness=0,
+        relief='ridge')
+    mainContent.create_text(
+        60, 30,
+        fill="#435d7d",
+        font="Helvetica 12",
+        text="Nome"
+    )
+
+    mainContent.create_text(
+        300, 30,
+        fill="#435d7d",
+        font="Helvetica 12",
+        text="Número de Registro"
+    )
+
+    mainContent.create_text(
+        460, 30,
+        fill="#435d7d",
+        font="Helvetica 12",
+        text="E-mail"
+    )
+
+    mainContent.create_text(
+        700, 30,
+        fill="#435d7d",
+        font="Helvetica 12",
+        text="Cargo"
+    )
+
+    mainContent.create_text(
+        845, 30,
+        fill="#435d7d",
+        font="Helvetica 12",
+        text="Ações"
+    )
+
+    mainContent.create_line(
+        20, 55,
+        880, 55,
+        fill="#a8b0c0"
+    )
+
+    topBar.tag_bind("addButtonSurface", "<Button-1>", self.addButtonClicked)
+    topBar.pack()
+    mainContent.pack()
+
+    window.resizable(0, 0)
+    window.mainloop()
+
+
 contador = 1
 class LinhaDeDados(Professor, Secretario, Coordenador):
     
@@ -228,15 +490,17 @@ class LinhaDeDados(Professor, Secretario, Coordenador):
         self._cargo = cargo
         self._salario = salario
         global contador
-        global trashcanImage
-        
+
+        self.trashcanImage = PhotoImage(
+        file="C:\\Users\\lucas\\Desktop\\CRUD\\delete.png") # É necessário trocar esse diretório
+
         self.nameElement = mainContent.create_text(
             40, 45 + 40*contador,
             fill="#696969",
             font="Helvetica 12",
             anchor='w',
             text=self.getNome())
-        registerElement = mainContent.create_text(
+        self.registerElement = mainContent.create_text(
             232, 45 + 40*contador,
             fill="#696969",
             font="Helvetica 12",
@@ -253,27 +517,43 @@ class LinhaDeDados(Professor, Secretario, Coordenador):
             fill="#696969",
             font="Helvetica 12",
             anchor='w',
-                text=self.getCargo())
-        moreInfoElement = mainContent.create_text(
-            830, 45 + 40*contador,
-            fill='#ffbf00',
-            font='Helvetica 18 bold',
-            anchor='w',
-            text= "⋮",
-            tags="moreInfoSurface")
-        deleteElement = mainContent.create_image(
+            text=self.getCargo())
+        self.moreInfoElement = Button(
+            mainContent,
+            fg="#ffbf00",
+            bg="white",
+            font='Arial 22 bold',
+            width="1",
+            height="1",
+            text="⋮",
+            highlightthickness = 0,
+            borderwidth=0,
+            command=self.moreInfoClicked)
+        self.moreInfoElement.pack()
+        self.moreInfoElement.place( x=830, y=19 + 40*contador )
+        '''self.deleteElement = mainContent.create_image(
             850, 35 + 40*contador,
             anchor=NW,
-            image=trashcanImage,
+            image=self.trashcanImage,
             tags="deleteSurface")
-        mainContent.tag_bind("moreInfoSurface", "<Button-1>", self.moreInfoClicked)
-        mainContent.tag_bind("deleteSurface", "<Button-1>", self.deleteClicked)
+        
+        #self.moreInfoElement.bind("<Button-1>", self.moreInfoClicked)
+        mainContent.tag_bind("deleteSurface", "<Button-1>", self.deleteClicked)'''
+        self.deleteElement = Button(
+          mainContent,
+          image=self.trashcanImage,
+          bg="white",
+          highlightthickness = 0,
+          borderwidth=0,
+          command=self.deleteClicked)
+        self.deleteElement.pack()
+        self.deleteElement.place( x=850, y=35 + 40*contador )
 
         contador += 1
         if(contador == 10):
             topBar.itemconfig(addBtn, fill="#C0C0C0")
-            
-    def moreInfoClicked(self, event):
+
+    def moreInfoClicked(self):
         topBar.itemconfig(addBtn, fill="#5cb85c")
         modal = Tk()
         modal.title("Atualizar funcionário")
@@ -322,7 +602,7 @@ class LinhaDeDados(Professor, Secretario, Coordenador):
             disabledforeground="#fafdfb",
             command=attBtnClicked)
         botao.grid(row=18, sticky=W, padx=130)
-        if not self.isCoord():
+        if self.getCargo() != "Coordenador":
           botaoAumento = Button(
               modal,
               fg="#fafdfb",
@@ -367,7 +647,7 @@ class LinhaDeDados(Professor, Secretario, Coordenador):
             except:
                 pass
               
-            if not self.isCoord():
+            if self.getCargo() != "Coordenador":
               try: valAumento = int(SVAumento.get())
               except: botaoAumento.config(state='disabled', bg="#A9BBD1")
 
@@ -508,7 +788,7 @@ class LinhaDeDados(Professor, Secretario, Coordenador):
             textvariable=SVSalario).grid(row=14,column=0, sticky=W, padx=75)
         SVSalario.set(self.getSalario())
 
-        if not self.isCoord():
+        if self.getCargo() != "Coordenador":
           
           Canvas(modal, height="10").grid(row=15)
           SVAumento = tk.StringVar(modal)
@@ -525,288 +805,18 @@ class LinhaDeDados(Professor, Secretario, Coordenador):
               textvariable=SVAumento).grid(row=16, column=0,sticky=W, padx=140)
         Canvas(modal, height="30").grid(row=17)
         
-    def deleteClicked(self,event):
+    def deleteClicked(self):
         global contador
+        mainContent.delete(self.nameElement)
+        mainContent.delete(self.registerElement)
+        mainContent.delete(self.emailElement)
+        mainContent.delete(self.cargoElement)
+        self.moreInfoElement.destroy()
+        self.deleteElement.destroy()
         del self
-        x = event.x
-        y = event.y
-        mainContent.delete(mainContent.find_closest(40, y))
-        mainContent.delete(mainContent.find_closest(232, y))
-        mainContent.delete(mainContent.find_closest(440, y))
-        mainContent.delete(mainContent.find_closest(680, y))
-        mainContent.delete(mainContent.find_closest(830, y))
-        mainContent.delete(mainContent.find_closest(850, y))
         contador -= 1
         if (contador < 10):
-            topBar.itemconfig(addBtn, fill="#5cb85c")
+            topBar.itemconfig(addBtn, fill="#5cb85c") 
 
-
-
-# Canvas principal
-
-window = Tk()
-window.title("CRUD")
-window.geometry("900x520")  # Width x Height
-trashcanImage = PhotoImage(
-    file="C:\\Users\\lucas\\Desktop\\CRUD\\delete.png") # É necessário trocar esse diretório
-topBar = Canvas(
-    window,
-    bg="#435d7d",
-    height="80",
-    width="900",
-    highlightthickness=0,
-    relief='ridge')
-topBar.create_text(
-    220, 40,
-    text="Gerenciador de funcionários",
-    fill="#fafdfb",
-    font="Helvetica 22 bold")
-addBtn = topBar.create_rectangle(
-    720, 20,
-    880, 60,
-    fill="#5cb85c",
-    tags="addButtonSurface")
-topBar.create_text(
-    800, 40,
-    text="Adicionar funcionário",
-    fill="#fafdfb",
-    font="Helvetica 12",
-    tags="addButtonSurface")
-
-# Nome / Número de Registro / E-mail / Cargo
-mainContent = Canvas(
-    window,
-    bg="white",
-    height="500",
-    width="900",
-    highlightthickness=0,
-    relief='ridge')
-mainContent.create_text(
-    60, 30,
-    fill="#435d7d",
-    font="Helvetica 12",
-    text="Nome"
-)
-
-mainContent.create_text(
-    300, 30,
-    fill="#435d7d",
-    font="Helvetica 12",
-    text="Número de Registro"
-)
-
-mainContent.create_text(
-    460, 30,
-    fill="#435d7d",
-    font="Helvetica 12",
-    text="E-mail"
-)
-
-mainContent.create_text(
-    700, 30,
-    fill="#435d7d",
-    font="Helvetica 12",
-    text="Cargo"
-)
-
-mainContent.create_text(
-    845, 30,
-    fill="#435d7d",
-    font="Helvetica 12",
-    text="Ações"
-)
-
-mainContent.create_line(
-    20, 55,
-    880, 55,
-    fill="#a8b0c0"
-)
-
-# Função para add novo funcionário
-
-def addButtonClicked(cont):
-    if(contador < 10):
-        topBar.itemconfig(addBtn, fill="#5cb85c")
-        modal = Tk()
-        modal.title("Adicionar funcionário")
-        modal.geometry("420x520+%d+%d" % (window.winfo_x(), window.winfo_y()))
-        modal.resizable(0, 0)
-
-        def validacaoCampos(*args):
-            val1,val2,val3,val4,val5 = False, False, False, False, False
-
-            try:
-                val1 = str(SVName.get())
-                if any(char.isdigit() for char in val1):
-                    val1 = '' 
-            except:
-                pass
-                
-            try: val2 = int(SVIdade.get())
-            except: botao.config(state='disabled',bg="#A9BBD1")
-            
-            try:
-                val3 = str(SVEmail.get())
-                if not any( char == "@" for char in val3):
-                    val3 = ''
-            except:
-                pass
-                
-            try: val4 = int(SVCargaHoraria.get())
-            except: botao.config(state='disabled', bg="#A9BBD1")
-            
-            try:
-                val5 = str(SVCursoSetor.get())
-                if any(char.isdigit() for char in val5):
-                    val5 = '' 
-            except:
-                pass
-
-            if val1 and val2 and val3 and val4 and val5:
-                botao.config(state='normal',bg="#435d7d")
-            else:
-                botao.config(state='disabled',bg="#A9BBD1")
-                
-            return val1, val2, val3, val4, val5
-
-        topBarAdd = Canvas(
-            modal,
-            bg="#435d7d",
-            height="80",
-            width="420",
-            highlightthickness=0,
-            relief='ridge')
-        topBarAdd.create_text(
-            210, 40,
-            text="Adicionar funcionários",
-            fill="#fafdfb",
-            font="Helvetica 22 bold")
-        topBarAdd.grid(row=0, sticky=W)
-
-        Canvas(modal, height="10").grid(row=1)
-        SVComboBox = tk.StringVar(modal)
-        ttk.Label(
-            modal,
-            font="Helvetica 14",
-            foreground="#435d7d",
-            text="Classe:").grid(row=2, column=0, sticky=W)
-        ComboBox = ttk.Combobox(
-            modal,
-            font="Helvetica 16",
-            state="readonly",
-            values=["Professor", "Secretario", "Coordenador"],
-            width="15",
-            textvariable = SVComboBox)
-        SVComboBox.set("Professor")
-        ComboBox.grid(row=2, column=0, sticky=W, padx=70)
-
-        Canvas(modal, height="10").grid(row=3)
-        SVName = tk.StringVar(modal)
-        SVName.trace("w", validacaoCampos)
-        ttk.Label(
-            modal,
-            foreground="#435d7d",
-            font="Helvetica 14",
-            text="Nome:").grid(row=4, column=0, sticky=W)
-        name = tk.Entry(
-            modal,
-            font="Helvetica 16",
-            textvariable=SVName)
-        name.grid(row=4, column=0, stick=W, padx=60)
-
-        Canvas(modal, height="10").grid(row=5)
-        SVIdade = tk.StringVar(modal)
-        SVIdade.trace("w", validacaoCampos)
-        ttk.Label(
-            modal,
-            foreground="#435d7d",
-            font="Helvetica 14",
-            text="Idade:").grid(row=6, column=0, sticky=W)
-        idade = Entry(
-            modal,
-            font="Helvetica 16",
-            width="4",
-            textvariable=SVIdade)
-        idade.grid(row=6, column=0, stick=W, padx=60)
-
-        Canvas(modal, height="10").grid(row=7)
-        SVEmail = tk.StringVar(modal)
-        SVEmail.trace("w", validacaoCampos)
-        ttk.Label(
-            modal,
-            foreground="#435d7d",
-            font="Helvetica 14",
-            text="Email:").grid(row=8, column=0, sticky=W)
-        email = Entry(
-            modal,
-            font="Helvetica 16",
-            textvariable=SVEmail)
-        email.grid(row=8, column=0, stick=W, padx=60)
-
-        Canvas(modal, height="10").grid(row=9)
-        SVCargaHoraria = tk.StringVar(modal)
-        SVCargaHoraria.trace("w", validacaoCampos)
-        ttk.Label(
-            modal,
-            foreground="#435d7d",
-            font="Helvetica 14",
-            text="Carga horária:").grid(row=10, column=0, sticky=W)
-        cargaHoraria = Entry(
-            modal,
-            font="Helvetica 16",
-            width="4",
-            textvariable=SVCargaHoraria)
-        cargaHoraria.grid(row=10, column=0, stick=W, padx=125)
-
-        Canvas(modal, height="10").grid(row=11)
-        SVCursoSetor = tk.StringVar(modal)
-        SVCursoSetor.trace("w", validacaoCampos)
-        ttk.Label(
-            modal,
-            foreground="#435d7d",
-            font="Helvetica 14",
-            text="Curso/Setor:").grid(row=12, sticky=W)
-        cursoSetor = Entry(
-            modal,
-            font="Helvetica 16",
-            width="15",
-            textvariable=SVCursoSetor)
-        cursoSetor.grid(row=12)
-        Canvas(modal, height="70").grid(row=13)
-
-
-    
-        def submitBtnClicked():
-            print("Funcionário adicionado")
-            name, idade, email, cargaHoraria, cursoSetor = validacaoCampos()
-            modal.destroy()
-            return (Professor(name, idade, email, cargaHoraria, cursoSetor) if SVComboBox.get() == "Professor"
-                    else Secretario(name, idade, email, cargaHoraria, cursoSetor) if SVComboBox.get() == "Secretario"
-                    else Coordenador(name, idade, email, cargaHoraria, cursoSetor))
-
-            
-        botao = Button(
-            modal,
-            fg="#fafdfb",
-            bg="#A9BBD1",
-            font="Helvetica 12",
-            width="15",
-            text="Finalizado",
-            state="disabled",
-            disabledforeground="#fafdfb",
-            command=submitBtnClicked)
-        botao.grid(row=14)
-
-    else:
-        topBar.itemconfig(addBtn, fill="#C0C0C0")
-
-topBar.tag_bind("addButtonSurface", "<Button-1>", addButtonClicked)
-
-topBar.pack()
-mainContent.pack()
-
-window.resizable(0, 0)
-window.mainloop()
-
-
+x=Aplication()
 
