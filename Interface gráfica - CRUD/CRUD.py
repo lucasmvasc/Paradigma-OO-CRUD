@@ -86,7 +86,7 @@ class Professor(Funcionario):
     LinhaDeDados(nome, idade, email, cargaHoraria, curso, self.getTurmas(), self.getAdvertencias(), self.getNumRegistro(), self.getSalario(), cargo ="Professor")
 
   def ativarIncentivo(self, valor):
-    if not str(valor).isdigit(): # Verifica se a idade possui somente digitos
+    if not str(valor).isdigit(): # Verifica se o valor possui somente digitos
       raise ValueError(f"O valor {valor} para gerar incentivo é inválido ! Por favor digite soemnte números inteiros positivos")
     self.setSalario((self.getSalario()* (valor/100)) + self.getSalario()) 
 
@@ -463,13 +463,7 @@ contador = 1
 class LinhaDeDados(Professor, Secretario, Coordenador):
     
     def getCargo(self):
-        return self._cargo
-      
-    def isCoord(self):
-        if self.getCargo() == "Coordenador":
-          return True
-        else:
-          return False
+      return self._cargo
     
     def ativarIncentivo(self, valor):
       if self.getCargo() == "Professor":
