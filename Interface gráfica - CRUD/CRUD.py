@@ -141,7 +141,7 @@ class Secretario(Funcionario):
     Funcionario.__init__(self, nome, idade, email, cargaHoraria)
     self.setSalario(1200)
     self._setor = setor
-    newLiney = LinhaDeDados(nome, idade, email, cargaHoraria, setor, 0, 0, self.getNumRegistro(), self.getSalario(), cargo ="Secretario")
+    LinhaDeDados(nome, idade, email, cargaHoraria, setor, 0, 0, self.getNumRegistro(), self.getSalario(), cargo ="Secretario")
 
   def transferirSetorPara(self,novoSetor):
     print("Transferência do secretário " + self.getNome() + " do setor " + self.getSetor() + f" para {novoSetor} realizada com sucesso\n")
@@ -175,7 +175,7 @@ class Coordenador(Funcionario):
     Funcionario.__init__(self, nome, idade, email, cargaHoraria)
     self.setSalario(4500)
     self._setor = setor
-    newLinez = LinhaDeDados(nome, idade, email, cargaHoraria, setor, 0, 0, self.getNumRegistro(), self.getSalario(), cargo ="Coordenador")
+    LinhaDeDados(nome, idade, email, cargaHoraria, setor, 0, 0, self.getNumRegistro(), self.getSalario(), cargo ="Coordenador")
 
   def ativarIncentivo(self, valor):
     print("Operação inválida para Coordenador")
@@ -817,6 +817,5 @@ class LinhaDeDados(Professor, Secretario, Coordenador):
         contador -= 1
         if (contador < 10):
             topBar.itemconfig(addBtn, fill="#5cb85c") 
-
-x=Aplication()
+Aplication()
 
