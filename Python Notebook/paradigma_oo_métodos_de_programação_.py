@@ -1077,14 +1077,6 @@ class LinhaDeDados(Professor, Secretario, Coordenador):
             command=self.moreInfoClicked)
         self.moreInfoElement.pack()
         self.moreInfoElement.place( x=830, y=19 + 40*contador )
-        '''self.deleteElement = mainContent.create_image(
-            850, 35 + 40*contador,
-            anchor=NW,
-            image=self.trashcanImage,
-            tags="deleteSurface")
-        
-        #self.moreInfoElement.bind("<Button-1>", self.moreInfoClicked)
-        mainContent.tag_bind("deleteSurface", "<Button-1>", self.deleteClicked)'''
         self.deleteElement = Button(
           mainContent,
           image=self.trashcanImage,
