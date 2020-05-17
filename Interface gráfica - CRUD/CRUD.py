@@ -264,7 +264,7 @@ class Aplication():
               modal,
               font="Helvetica 14",
               foreground="#435d7d",
-              text="Classe:").grid(row=2, column=0, sticky=W)
+              text="Cargo:").grid(row=2, column=0, sticky=W)
           ComboBox = ttk.Combobox(
               modal,
               font="Helvetica 16",
@@ -668,7 +668,7 @@ class LinhaDeDados(Professor, Secretario, Coordenador):
             modal,
             font="Helvetica 14",
             foreground="#435d7d",
-            text="Classe:").grid(row=2, column=0, sticky=W)
+            text="Cargo:").grid(row=2, column=0, sticky=W)
         ComboBox = ttk.Combobox(
             modal,
             font="Helvetica 16",
